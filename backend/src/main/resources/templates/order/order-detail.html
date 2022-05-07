@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragments/head::headFragment"></head>
+
+<body class="container-fluid">
+
+<div class="d-grid gap-2 justify-content-md-center m-3">
+    <br/>
+    <h1 th:text="|${order.email} 님의 주문 상세 페이지|">주문 상세 페이지</h1>
+</div>
+<div class="d-grid gap-2 justify-content-md-center m-2">
+    <h5 th:text="|배송지 : ${order.address}|">배송지 주소</h5>
+    <br/>
+</div>
+
+<div class="container">
+
+<table class="table table-hover table-striped">
+    <thead>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">상품명</th>
+        <th scope="col">카테고리</th>
+        <th scope="col">가격</th>
+        <th scope="col">상품설명</th>
+        <th scope="col">주문수량</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="product :${products}" th:object="${product}" >
+        <td th:text = "${productStat.index}+1"></td>
+        <td th:text = "*{name}"></td>
+        <td th:text = "*{category}"></td>
+        <td th:text = "|*{price} 원|"></td>
+
+        <td th:text = "*{description}"></td>
+        <td th:text = "|*{count} 개|"></td>
+    </tr>
+    </th:each>
+    </tbody>
+</table>
+</div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-center m-4">
+    <a th:href="@{/orders}" class="btn btn-outline-success me-md-2 btn-lg" type="button">뒤로가기</a>
+</div>
+<!--<div class="container">-->
+<!--    <form >-->
+<!--        <fieldset disabled>-->
+<!--            <legend th:text="주문 목록"></legend>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="disabledTextInput1" class="form-label">Id</label>-->
+<!--                <input type="text" id="disabledTextInput1" class="form-control" th:placeholder="${user.id}" placeholder="Id">-->
+<!--            </div>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="disabledSelect" class="form-label">Type</label>-->
+<!--                <select id="disabledSelect" class="form-select">-->
+<!--                    <option th:text="${user.type}">NORMAL</option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="disabledTextInput2" class="form-label">Name</label>-->
+<!--                <input type="text" id="disabledTextInput2" class="form-control" th:placeholder="${user.name}" placeholder="Amount">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="disabledTextInput3" class="form-label">CreatedAt</label>-->
+<!--                <input type="text" id="disabledTextInput3" class="form-control" th:placeholder="${user.createdAt}" placeholder="CreatedAt">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="disabledTextInput4" class="form-label">UpdatedAt</label>-->
+<!--                <input type="text" id="disabledTextInput4" class="form-control" th:placeholder="${user.updatedAt}" placeholder="UpdatedAt">-->
+<!--            </div>-->
+<!--        </fieldset>-->
+<!--    </form>-->
+
+<!--    <form th:action="@{/user/{param1}(param1=${user.id})}" th:method="delete">-->
+<!--        <input type="hidden" name="_method" value="delete"/>-->
+<!--        <a th:href="@{/users}" class="btn btn-outline-success me-md-2 btn-lg" type="button">뒤로가기</a>-->
+<!--        <button type="submit" class="btn btn-outline-primary me-md-2 btn-lg" disabled>수정하기</button>-->
+<!--        <button type="submit" class="btn btn-outline-danger btn-lg">삭제하기</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+
+</body>
+</html>
