@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head::headFragment"></head>
+
+<body class="container-fluid">
+
+<div class="m-3 d-grid gap-2 justify-content-md-center">
+    <br/>
+    <h1>상품 관리 페이지</h1>
+</div>
+
+<form class="m-3" th:action="@{/orders/query}" th:method="post">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <div class="form-floating">
+            <select id="filterUserType" name="type" class="form-select">
+                <option value="ALL" selected>ALL</option>
+                <option value="BOOK">BOOK</option>
+                <option value="COFFEE">COFFEE</option>
+                <option value="CANDY">CANDY</option>
+            </select>
+            <label for="filterUserType">카테고리</label>
+        </div>
+
+        <div class="form-floating">
+            <input class="form-select" type="date" name="from" id="startDate">
+            <label for="startDate">FROM</label>
+        </div>
+        <div class="form-floating">
+            <input class="form-select" type="date" name="to" id="endDate">
+            <label for="endDate">TO</label>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button class="btn btn-outline-dark btn-lg" type="submit">검색</button>
+        </div>
+    </div>
+</form>
+
+<div class="container">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">상품번호</th>
+            <th scope="col">대표이미지</th>
+            <th scope="col">상품명</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">상품가격</th>
+            <th scope="col">상품설명</th>
+            <th scope="col">재고</th>
+            <th scope="col">입고일자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product :${products}" th:object="${product}" >
+            <td th:text = "${productStat.index}+1"></td>
+            <td th:text = "*{id}">id</td>
+            <td>
+                <img width="32px" height="32px"
+                     th:if="${product.imagePath}"
+                     th:src="|https://storage.googleapis.com/su-image-storage/${product.imagePath}|" alt="이미지">
+                <img width="32px" height="32px"
+                     th:if="!${product.imagePath}"
+                     th:src="|https://storage.googleapis.com/su-image-storage/error.png|" alt="이미지">
+            </td>
+            <td th:text = "*{name}">name</td>
+            <td th:text = "*{category}">카테고리</td>
+            <td th:text = "*{price}">0</td>
+            <td th:text = "*{description}">상품 설명</td>
+            <td th:text = "*{quantity}">재고</td>
+            <td th:text = "*{createdAt}">생성일자</td>
+            <td th:with="id=*{id}">
+                <form th:action="@{/products/{param1}(param1=${id})}" th:method="delete">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="btn btn-outline-danger btn">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </th:each>
+        </tbody>
+
+    </table>
+    <br/>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+        <a th:href="@{/}" class="btn btn-outline-success me-md-2 btn-lg" type="button">뒤로가기</a>
+        <a th:href="@{/products/product}" class="btn btn-outline-primary btn-lg" type="button">생성하기</a>
+    </div>
+</div>
+
+</body>
+</html>
