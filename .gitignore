@@ -3,6 +3,7 @@ build/
 .idea
 .gradle
 *.log
+*.json
 
 !**/src/main/**/build/
 !**/src/test/**/build/
