@@ -3,6 +3,7 @@ package com.su.order.product.controller;
 import com.su.order.file.FileService;
 import com.su.order.product.dto.ProductDto;
 import com.su.order.product.dto.ProductDtoMapper;
+import com.su.order.product.entity.Product;
 import com.su.order.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -41,10 +42,12 @@ public class ProductController {
     /* 상품 생성 */
     @PostMapping("/products/product")
     public String createProduct(ProductDto.Create dto) throws IOException {
-        var savedFileName = fileService.saveProduct(dto);
+        Product product = asProductModel(dto);
 
-        var product = asProductModel(dto);
-        product.setImagePath(savedFileName);
+        if(!dto.getImageMultipart().isEmpty()){
+            var savedFileName = fileService.saveProduct(dto);
+            product.setImagePath(savedFileName);
+        }
 
         productService.createProduct(product);
         return "redirect:/products";

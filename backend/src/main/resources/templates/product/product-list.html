@@ -42,6 +42,7 @@
         <tr>
             <th scope="col"></th>
             <th scope="col">상품번호</th>
+            <th scope="col">대표이미지</th>
             <th scope="col">상품명</th>
             <th scope="col">카테고리</th>
             <th scope="col">상품가격</th>
@@ -54,6 +55,14 @@
         <tr th:each="product :${products}" th:object="${product}" >
             <td th:text = "${productStat.index}+1"></td>
             <td th:text = "*{id}">id</td>
+            <td>
+                <img width="32px" height="32px"
+                     th:if="${product.imagePath}"
+                     th:src="|https://storage.googleapis.com/su-image-storage/${product.imagePath}|" alt="이미지">
+                <img width="32px" height="32px"
+                     th:if="!${product.imagePath}"
+                     th:src="|https://storage.googleapis.com/su-image-storage/error.png|" alt="이미지">
+            </td>
             <td th:text = "*{name}">name</td>
             <td th:text = "*{category}">카테고리</td>
             <td th:text = "*{price}">0</td>
