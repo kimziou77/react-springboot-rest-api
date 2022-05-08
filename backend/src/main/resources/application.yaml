@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: root
+    password: ${DB_PASSWORD}
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      location: ${FILE_DIR}
+      max-file-size: 10MB
+      max-request-size: 30MB
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: classpath:${GOOGLE_APPLICATION_CREDENTIALS}
+
+bucket: ${BUCKET_NAME}
