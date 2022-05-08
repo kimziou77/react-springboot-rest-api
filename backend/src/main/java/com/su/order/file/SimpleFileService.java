@@ -27,10 +27,11 @@ public class SimpleFileService implements FileService {
 
     @Override
     public String saveProduct(ProductDto.Create dto) throws IOException {
-        var fileName = saveFileToLocal(dto.getImageMultipart()); // local 저장
-        saveFileToGCS(fileName);// gcs 저장
+        var fileName = saveFileToLocal(dto.getImageMultipart());
+        saveFileToGCS(fileName);
         return fileName;
     }
+
 
     public String saveFileToLocal(MultipartFile multipartFile) throws IOException {
         if (multipartFile.isEmpty()) {
@@ -48,10 +49,8 @@ public class SimpleFileService implements FileService {
                         .setAcl(new ArrayList<>(Arrays.asList(Acl.of(Acl.User.ofAllAuthenticatedUsers(), Acl.Role.READER))))
                         .build(),
                 new FileInputStream(LOCAL_SAVE_DIR +"\\" + UPLOAD_NAME));
-
         return blobInfo;
     }
-
 
     private String createSavedFileName(String originalFilename) {
         String ext = extractExt(originalFilename);
